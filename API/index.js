@@ -1,0 +1,15 @@
+const express = require('express')
+const dotenv=require('dotenv').config()
+const {errorHandler} = require("./middleware/errorMiddleware")
+const connectToDatabase = require('./config/db')
+const routerAPI = require('./routes/main.Routes')
+
+const app = express()
+const port = process.env.PORT || 3000
+connectToDatabase()
+app.use(express.Router())
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+app.use(errorHandler)
+routerAPI(app)
+app.listen(port, ()=> {console.log(`Server is runing on port ${port}`, `http://127.0.0.1:${port}`)})
