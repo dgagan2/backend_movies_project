@@ -1,5 +1,14 @@
-const routerAPI=(app)=>{
-    app.use('/', (req, res)=>{res.send('Oura Movies')})
+const userRoute = require("./user.routes")
+
+const routerApi= (app)=>{
+    app.get('/', (req, res)=>{res.send('Oura Movies')})
+    app.use('/user', userRoute)
+    // app.use('/movies')
+    // app.use('/series')
+    // app.use('/categories')
+    // app.use('/comments')
+    // app.use('/favorites')
+    
 }
 
-module.exports=routerAPI
+module.exports=routerApi
