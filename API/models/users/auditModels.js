@@ -11,14 +11,10 @@ const auditSchema = mongoose.Schema({
     },
     event:{
         type: String,
-        default: "login"
-    },
-    idEvent:{
-        type: String,
-        require: false
+        default: "Login"
     }
 }, 
     {timestamps:true}
 )
 
-module.exports=mongoose.model("Audit", auditSchema)
+module.exports=mongoose.model("AuditUser", auditSchema)
