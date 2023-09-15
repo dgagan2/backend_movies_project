@@ -10,6 +10,7 @@ const routerApi= (app)=>{
     // app.use('/categories')
     // app.use('/comments')
     // app.use('/favorites')
+    app.use('*', (req, res)=>{res.status(404).send("Not Found")})
     
 }
 

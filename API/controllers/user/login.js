@@ -34,7 +34,7 @@ const login=expressAsyncHandler(async (req, res)=>{
         const token=signToken(payload)
         res.status(200).json({
             id: user.id,
-            name: user.fullName.firstname && user.fullName.lastName,
+            name: user.fullName.firstname,
             age: user.age,
             address: user.address,
             token: token
@@ -54,7 +54,7 @@ const forgotPassword=expressAsyncHandler(async (req, res)=>{
         res.status(400)
         throw new Error("La contraseña debe tener mas de 6 letras incluyendo simbolos, numeros y mayusculas")
     }
-    const updatePassword=await User.findOneAndUpdate({email}, {password:hashedPassword(password)})
+    const updatePassword=await User.findOneAndUpdate({email}, {password:await hashedPassword(password)})
     if(updatePassword){
         await AuditUser.create({
             idUser: updatePassword.id,
