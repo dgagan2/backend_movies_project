@@ -15,10 +15,12 @@ const {
 const genreRoutes = require('./genre.routes')
 const languageRoutes = require('./language.routes')
 const likeRoute = require('./like.routes')
+const favoriteMovies = require('./favoriteMovies.routes')
 
 movieRoute.use('/language', protect(), languageRoutes)
 movieRoute.use('/genre', protect(), genreRoutes)
 movieRoute.use('/like', likeRoute)
+movieRoute.use('/favoriteMovies', protect(), favoriteMovies)
 movieRoute.post('/',
     protect(),
     checkRoles('admin'),
