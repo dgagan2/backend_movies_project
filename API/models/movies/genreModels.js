@@ -6,6 +6,6 @@ const genreSchema=mongoose.Schema({
         required: [true, 'Nombre del genero obligatorio'],
         unique:true
     }
-})
+}, {timestamps:true})
 
 module.exports=mongoose.model('Genre', genreSchema)

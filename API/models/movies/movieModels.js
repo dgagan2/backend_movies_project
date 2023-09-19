@@ -41,6 +41,8 @@ const movieSchema=mongoose.Schema({
     views:{type:Number, default:0},
     labels:String,
     premiere:{type:Boolean, default:false},//Mostrar las peliculas que estan en estreno
-})
+},
+{timestamps:true}
+)
 
 module.exports=mongoose.model('Movie', movieSchema)

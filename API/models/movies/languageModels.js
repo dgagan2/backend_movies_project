@@ -6,6 +6,6 @@ const languageSchema=mongoose.Schema({
         required: [true, 'Campo incompleto'],
         unique:true
     }
-})
+}, {timestamps:true})
 
 module.exports=mongoose.model('Language', languageSchema)
