@@ -35,7 +35,7 @@ const getFavoriteMovies=expressAsyncHandler(async(req, res)=>{
 
 const deleteFavoriteMovie=async(req, res)=>{
     const {sub}=req.user
-    const { movieId } = req.body
+    const { movieId } = req.params
     try {
         const favorite=await Favorite.findOneAndDelete({user:sub, movies:movieId})
         res.status(200).json({message:'Pelicula quitada de favoritos'})
