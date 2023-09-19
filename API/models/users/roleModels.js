@@ -6,6 +6,6 @@ const roleSchema=mongoose.Schema({
         required:[true, 'Ingrese el nombre del role'],
         unique: true
     }
-})
+}, {timestamps:true})
 
 module.exports=mongoose.model('Role', roleSchema)

@@ -6,6 +6,6 @@ const stateSchema=mongoose.Schema({
         required:[true, 'Ingrese el nombre del estado'],
         unique: true
     }
-})
+}, {timestamps:true})
 
 module.exports=mongoose.model('State', stateSchema)
