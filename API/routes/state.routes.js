@@ -5,6 +5,6 @@ const {search, deleteState, updateState, addState}=require('../controllers/user/
 stateRoute.get('/', search)
 stateRoute.post('/', addState)
 stateRoute.patch('/', updateState)
-stateRoute.delete('/', deleteState)
+stateRoute.delete('/:id', deleteState)
 
 module.exports=stateRoute

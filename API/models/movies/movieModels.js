@@ -30,24 +30,12 @@ const movieSchema=mongoose.Schema({
     director:String,
     actors:Array,
     like:{
-        user:{ 
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        },
-        numberLikes:{
-            type:Number, 
-            default:0
-        }
+        type:Number, 
+        default:0
     },
     dislike:{
-        user:{ 
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        },
-        numberDislikes:{
-            type:Number, 
-            default:0
-        }
+        type:Number, 
+        default:0
     },
     originalTitle:String,
     views:{type:Number, default:0},

@@ -88,10 +88,18 @@ const searchMovieByLabels=asyncHandler(async (req, res)=>{
     }
 })
 
+
+const getAllMovie=asyncHandler(async (req, res)=>{
+    const {skip=0, limit=30}=req.query
+    const movie=await Movie.find({}).limit(limit).skip(skip).exec()
+    res.status(200).json(movie)
+})
+
 module.exports={
     searchMovie, 
     searchMovieById, 
     searchMovieByLabels, 
     searchMovieByMostRecent, 
     searchMovieByPremiere, 
-    searchMovieByReleaseDate}
+    searchMovieByReleaseDate, 
+    getAllMovie}

@@ -5,6 +5,6 @@ const {search, deleteRole, updateRole, addRole}=require('../controllers/user/rol
 roleRoute.get('/', search )
 roleRoute.post('/', addRole)
 roleRoute.patch('/', updateRole)
-roleRoute.delete('/', deleteRole)
+roleRoute.delete('/:id', deleteRole)
 
 module.exports=roleRoute
