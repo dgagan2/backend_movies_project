@@ -7,7 +7,7 @@ const addLanguage=asyncHandler(async (req, res)=>{
         throw new Error('Ingrese un nombre')
     }
     const newLanguage=await Language.create({name})
-    res.status(204).json(newLanguage)
+    res.status(201).json(newLanguage)
     
 })
 
@@ -57,9 +57,9 @@ const deleteLanguage=asyncHandler(async (req, res)=>{
     }
     const language=await Language.findByIdAndDelete(id)
     if(language){
-        res.status(200).json('Lenguaje eliminado:', language.name)
+        res.status(200).json({message:'Lenguaje eliminado'})
     }else{
-        res.status(400).json({message:'No se pudo eliminar'})
+        res.status(400).json({message:'No se pudo eliminar, el lenguaje no existe'})
     }
 })
 

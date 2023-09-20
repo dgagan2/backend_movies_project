@@ -6,7 +6,7 @@ const addRole=asyncHandler(async (req, res)=>{
     const name= req.body.name
     const newRole=await Role.create({name:primeraLetraMayuscula(name)})
     if(newRole){
-        res.status(204).json(newRole)
+        res.status(201).json(newRole)
     }else{
         res.status(500).json({message:'No se creo el role'})
     }

@@ -33,7 +33,8 @@ const updateOrAddLike=asyncHandler(async (req, res)=>{
 
 
 const consultLikeMovies=asyncHandler(async (req, res)=>{
-    const{sub}=req.user
+    // const{sub}=req.user
+    console.log(req.user)
     const {id}=req.params
     const like = search(id, sub)
     if(!like){

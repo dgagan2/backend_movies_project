@@ -1,8 +1,8 @@
 const express=require('express')
-const { searchLike, like } = require('../controllers/movie/likeMovie')
+const { updateOrAddLike, consultLikeMovies } = require('../controllers/movie/likeMovie')
 const likeRoute=express.Router()
 
-likeRoute.post('search/:id', searchLike)
-likeRoute.post('/:id', like)
+likeRoute.get('/:id', consultLikeMovies)
+likeRoute.post('/:id', updateOrAddLike)
 
 module.exports=likeRoute

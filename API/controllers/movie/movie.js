@@ -33,21 +33,23 @@ const updateMovie=asyncHandler(async (req, res)=>{
         if(newMovie){
             res.status(200).json(newMovie)
         }else{
-            res.status(400).json({message:'No se pudo actualizar la pelicular'})
-        }
-       
-    
+            res.status(400).json({message:'No se pudo actualizar la pelicula'})
+        }   
     }
 )
 
-const deleteMovie=asyncHandler(async (req, res)=>{
+const deleteMovie=async (req, res)=>{
     const {id}=req.params
     if(!id){
         throw new Error('Ingrese el ID de la pelicula')
     }
-    const movie=await Movie.findByIdAndDelete(id)
-    res.status(200).json({message:'Pelicula eliminada'})
-})
+    try {
+        const movie=await Movie.findByIdAndDelete(id)
+        res.status(200).json({message:'Pelicula eliminada'})
+    } catch (error) {
+        res.status(500).json({message:'La pelicula no existe'})
+    }
+}
 
 
 module.exports={updateMovie, deleteMovie}

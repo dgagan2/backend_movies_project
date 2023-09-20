@@ -18,7 +18,7 @@ const movieSchema=mongoose.Schema({
         required:[true, 'Ingrese el idioma de la pelicula']
     },
     movieDuration:String,
-    releaseDate:Date,
+    releaseDate:{type:Date, required:[true, 'Ingrese la fecha de estreno de la pelicual']},
     posterPath:{
         type:String, 
         required:[true, 'Cargue el poster de la pelicula']

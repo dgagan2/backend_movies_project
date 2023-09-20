@@ -3,28 +3,42 @@ const Movie=require('../../models/movies/movieModels')
 
 
 const searchMovie=asyncHandler(async (req, res)=>{
-    const{name, genre, language, originalTitle, skip=0, limit=30}=req.body
+    const{title, genre, language, originalTitle, skip=0, limit=30}=req.body
     let movie
-    if(name || originalTitle){
-        movie=await Movie.find({
-            $or: [
-              { name: { $regex: name, $options: 'i' } },
-              { originalTitle: { $regex: originalTitle, $options: 'i' } }
-            ]
-          }).limit(limit).skip(skip).exec()
+    if(title){
+        movie=await Movie.find(
+            {
+                title: { $regex: title, $options: 'i' }
+            }
+        ).limit(limit).skip(skip) 
+    }
+    if(originalTitle){
+        movie=await Movie.find(
+            {
+              originalTitle: { $regex: originalTitle, $options: 'i' } 
+            }
+        ).limit(limit).skip(skip) 
     }
     if(genre){
-        movie=await Movie.find({genre}).limit(limit).skip(skip).exec()
-    }
+        movie=await Movie.find(
+            {
+                genre:{ $regex: genre, $options: 'i' }
+            }
+        ).limit(limit).skip(skip)
+    }   
     if(language){
-        movie=await Movie.find({genre}).limit(limit).skip(skip).exec()
+        movie=await Movie.find(
+            {
+                language:{ $regex: language, $options: 'i' }
+            }
+        ).limit(limit).skip(skip)
     }
 
-    if(movie){
-        res.status(200).json(movie)
-    }else{
+    if(!movie || Object.keys(movie).length==0){
         res.status(404)
         throw new Error('Lo siento, no tenemos nada que mostrar') 
+    }else{
+        res.status(200).json(movie)
     }
     
 })
@@ -41,7 +55,7 @@ const searchMovieById=asyncHandler(async (req, res)=>{
 
 const searchMovieByPremiere=asyncHandler(async (req, res)=>{
     const{skip=0, limit=30}=req.body
-    const movie=await Movie.find({premiere:true}).limit(limit).skip(skip).exec()
+    const movie=await Movie.find({premiere:true}).limit(limit).skip(skip)
     if(movie){
         res.status(200).json(movie)
     }else{
@@ -56,7 +70,7 @@ const searchMovieByReleaseDate=asyncHandler(async (req, res)=>{
         releaseDate: {
             $gte: startDate,
             $lte: endDate 
-        }}).limit(limit).skip(skip).exec()
+        }}).limit(limit).skip(skip)
         
     if(movie){
         res.status(200).json(movie)

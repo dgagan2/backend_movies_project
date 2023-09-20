@@ -1,19 +1,23 @@
 const asyncHandler = require("express-async-handler")
 const Genre=require('../../models/movies/genreModels')
+const primeraLetraMayuscula = require("../../utils/lowercase")
 
-const addGenre=asyncHandler(async (req, res)=>{
+const addGenre=async (req, res)=>{
     const {name}=req.body
     if(!name){
         throw new Error('Ingrese un nombre')
     }
-    const newGenre=await Genre.create({name})
-    if(newGenre){
-        res.status(204).json(newGenre)
-    }else{
-        res.status(400).json({message:'No se pudo crear el genero'})
-    }
-})
 
+    try {
+        const newGenre=await Genre.create({name:primeraLetraMayuscula(name)})
+        res.status(201).json(newGenre)
+    } catch (error) {
+        res.status(500).json({message:'No se pudo crear el genero, ya existe', error})
+    }
+    
+}
+
+// Se consulta generos de peliculas, debe llegar los ID como arreglos
 const getGenreByIDs=asyncHandler(async (req, res)=>{
     const {id}=req.body
     if(!id){
@@ -40,30 +44,33 @@ const getGenreByName=asyncHandler(async (req, res)=>{
     }
 })
 
-const updateGenre=asyncHandler(async (req, res)=>{
+const updateGenre=async (req, res)=>{
     const {name, id}=req.body
     if(!name || !id){
         throw new Error('Ingrese el nombre y ID')
     }
-    const newGenre=await Genre.findById(id, {name})
-    if(newGenre){
+    try {
+        const newGenre=await Genre.findById(id, {name})
         res.status(200).json(newGenre)
-    }else{
-        res.status(400).json({message: 'No se pudo actualizar'})
+    } catch (error) {
+        res.status(400).json({message: 'No se pudo actualizar', error})
     }
-})
+
+}
 
 const deleteGenre=asyncHandler(async (req, res)=>{
     const {id}=req.params
     if(!id){
         throw new Error('Ingrese el ID del genero a eliminar')
     }
-    const genre=await Genre.findByIdAndDelete(id)
-    if(genre){
-        res.status(200).json('Lenguaje eliminado:', genre.name)
-    }else{
-        res.status(400).json({message:'No se pudo eliminar'})
+
+    try {
+        await Genre.findByIdAndDelete(id)
+        res.status(200).json({message:'Lenguaje eliminado'})
+    } catch (error) {
+        res.status(400).json({message:'No se pudo eliminar, lenguaje no existe', error})
     }
+    
 })
 
 const getAllGenre=asyncHandler(async (req, res)=>{

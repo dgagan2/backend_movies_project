@@ -12,10 +12,7 @@ const routerApi= (app)=>{
     app.use('/state', protect(), checkRoles('admin'), stateRoute)
     app.use('/role', protect(), checkRoles('admin'), roleRoute)
     app.use('/movies', movieRoute)
-    // app.use('/series')
-    // app.use('/categories')
     // app.use('/comments')
-    // app.use('/favorites')
     app.use('*', (req, res)=>{res.status(404).send("Not Found")})
     
 }

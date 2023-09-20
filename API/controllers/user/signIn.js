@@ -42,7 +42,7 @@ const signIn=asyncHandler(async (req, res)=>{
         phoneNumber
     })
     if(newUser){
-        res.status(204).json(deletePassword(newUser))
+        res.status(201).json(deletePassword(newUser))
     }else{
         res.status(500).json({message:'Usuario no creado'})
     }

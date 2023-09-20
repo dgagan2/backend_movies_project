@@ -37,7 +37,7 @@ const addMovie=asyncHandler(async (req, res)=>{
         })
 
         const savedMovie=await movie.save()
-        res.status(204).json(savedMovie)
+        res.status(201).json(savedMovie)
     
     }
 )

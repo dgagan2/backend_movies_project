@@ -15,4 +15,4 @@ const favoriteSchema=mongoose.Schema({
     }
 }, {timestamps:true})
 
-module.exports=mongoose.Model('Favorite', favoriteSchema)
+module.exports=mongoose.model('Favorite', favoriteSchema)
