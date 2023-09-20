@@ -8,7 +8,7 @@ const addGenre=asyncHandler(async (req, res)=>{
     }
     const newGenre=await Genre.create({name})
     if(newGenre){
-        res.status(200).json(newGenre)
+        res.status(204).json(newGenre)
     }else{
         res.status(400).json({message:'No se pudo crear el genero'})
     }

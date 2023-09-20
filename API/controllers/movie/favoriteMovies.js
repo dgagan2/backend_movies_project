@@ -20,7 +20,7 @@ const addMovieToFavorites = async (req, res) => {
             await favoriteList.save();
         }
 
-        res.status(200).json({ message: 'Película agregada a la lista de favoritos' });
+        res.status(204).json({ message: 'Película agregada a la lista de favoritos' });
     } catch (error) {
         res.status(500).json({ error: 'Error al agregar la película a la lista de favoritos', error });
     }

@@ -5,7 +5,12 @@ const primeraLetraMayuscula = require("../../utils/lowercase")
 const addRole=asyncHandler(async (req, res)=>{
     const name= req.body.name
     const newRole=await Role.create({name:primeraLetraMayuscula(name)})
-    res.status(200).json(newRole)
+    if(newRole){
+        res.status(204).json(newRole)
+    }else{
+        res.status(500).json({message:'No se creo el role'})
+    }
+    
 })
 
 const updateRole=async (req, res)=>{

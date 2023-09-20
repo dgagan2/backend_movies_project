@@ -19,7 +19,7 @@ const addMovie=asyncHandler(async (req, res)=>{
         }else{
             throw new Error("Debe cargar las imagenes")
         }
-        const newMovie=await Movie.create({
+        const movie=new Movie({
             title: primeraLetraMayuscula(title),
             overview,
             genre,
@@ -35,7 +35,9 @@ const addMovie=asyncHandler(async (req, res)=>{
             posterPath:downloadURL,
             postBackground:background.downloadURL
         })
-        res.status(200).json(newMovie)
+
+        const savedMovie=await movie.save()
+        res.status(204).json(savedMovie)
     
     }
 )

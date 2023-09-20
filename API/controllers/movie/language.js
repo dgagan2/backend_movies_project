@@ -7,7 +7,7 @@ const addLanguage=asyncHandler(async (req, res)=>{
         throw new Error('Ingrese un nombre')
     }
     const newLanguage=await Language.create({name})
-    res.status(200).json(newLanguage)
+    res.status(204).json(newLanguage)
     
 })
 
