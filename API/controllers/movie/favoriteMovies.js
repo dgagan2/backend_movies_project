@@ -2,7 +2,7 @@ const expressAsyncHandler = require('express-async-handler');
 const Favorite = require('../../models/movies/favoritesModels')
 
 const addMovieToFavorites = async (req, res) => {
-    const { movieId } = req.body
+    const { movieId } = req.params
     const {sub} = req.user
 
     try {
