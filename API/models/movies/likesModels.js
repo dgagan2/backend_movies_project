@@ -2,8 +2,7 @@ const mongoose=require('mongoose')
 
 const likeSchema=mongoose.Schema({
     idMovie:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Movie'
+        type: String
     },
     idUser:{
         type: mongoose.Schema.Types.ObjectId,

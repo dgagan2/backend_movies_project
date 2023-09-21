@@ -39,7 +39,6 @@ const search=async (req, res)=>{
     try {
         var state
         if(id){
-            console.log(id)
             state=await State.findById(id)
         }
         if(name){

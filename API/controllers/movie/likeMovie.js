@@ -5,38 +5,36 @@ const Movie=require('../../models/movies/movieModels')
 const updateOrAddLike=asyncHandler(async (req, res)=>{
     const{sub}=req.user
     const {id}=req.params
-    const ifExist=search(id, sub)
-    let newLike
-    if(ifExist==true){
-        newLike=await LikeMovie.findAndUpdate({
-            idMovie: id,
-            idUser: sub,
-        }, {like:false})
-        addLike(id, -1)
+    try {
+        const movie=await Movie.findById(id)
+        if(movie){
+            const ifExist=await search(id, sub)
+            var newLike
+            if(ifExist==true){
+                    newLike=await LikeMovie.findOneAndUpdate({idMovie:id, idUser:sub}, {like:false}, {new:true})
+                addLike(id, -1)
+            }
+            if(ifExist==false){
+                newLike=await LikeMovie.findOneAndUpdate({idMovie:id, idUser:sub}, {like:true}, {new:true})
+            addLike(id, 1)
+            }
+            if(ifExist==null){
+                newLike=await LikeMovie.create({idMovie: id, idUser: sub, like:true})
+                addLike(id, 1)
+            }
+            res.status(200).json(newLike)
+        }
+    } catch (error) {
+        res.status(500)
+        throw new Error('La pelicula no existe', error)
     }
-    if(ifExist==false){
-        newLike=await LikeMovie.findAndUpdate({
-            idMovie: id,
-            idUser: sub,
-        }, {like:true})
-        addLike(id, 1)
-    }
-    if(!ifExist){
-        newLike=await LikeMovie.create({
-            idMovie: id,
-            idUser: sub,
-            like:true})
-        addLike(id, 1)
-    }
-    res.status(200).json(newLike)
 })
 
 
 const consultLikeMovies=asyncHandler(async (req, res)=>{
-    // const{sub}=req.user
-    console.log(req.user)
+    const{sub}=req.user
     const {id}=req.params
-    const like = search(id, sub)
+    const like = await search(id, sub)
     if(!like){
         res.status(200).json(false)
     }else{
@@ -47,19 +45,24 @@ const consultLikeMovies=asyncHandler(async (req, res)=>{
 
 
 const addLike=async (id, value)=>{
-    await Movie.findByIdAndUpdate(id, { $inc: { like: value } }, { new: true }) 
+    await Movie.findByIdAndUpdate(id,{like:value})
 }
 
 const search=async (id, sub)=>{
     if(!id || !sub){
         throw new Error('Id pelicula vacio')
     }
+
     const searchLike = await LikeMovie.find({
         idMovie: id,
         idUser: sub,
-    }).select('like')
-
-    return searchLike
+    }, 'like')
+    if(searchLike.length>0){
+        return searchLike[0].like
+    }else{
+        return null
+    }
+    
 }
 
 module.exports={updateOrAddLike, consultLikeMovies}

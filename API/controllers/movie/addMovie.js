@@ -29,7 +29,6 @@ const addMovie=asyncHandler(async (req, res)=>{
             director,
             actors,
             originalTitle,
-            adult,
             labels,
             premiere,
             posterPath:downloadURL,

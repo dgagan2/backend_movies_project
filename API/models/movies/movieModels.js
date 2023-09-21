@@ -33,10 +33,6 @@ const movieSchema=mongoose.Schema({
         type:Number, 
         default:0
     },
-    dislike:{
-        type:Number, 
-        default:0
-    },
     originalTitle:String,
     views:{type:Number, default:0},
     labels:String,

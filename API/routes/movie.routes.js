@@ -47,7 +47,7 @@ movieRoute.delete('/:id', protect(), checkRoles('admin'), deleteMovie)
 
 movieRoute.use('/language', protect(), languageRoutes)
 movieRoute.use('/genre', protect(), genreRoutes)
-movieRoute.use('/like', likeRoute)
+movieRoute.use('/like', protect(), likeRoute)
 movieRoute.use('/favoriteMovies', protect(), favoriteMovies)
 
 

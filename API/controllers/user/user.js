@@ -33,7 +33,6 @@ const filterUser=asyncHandler(async (req, res)=>{
 const updateUser=asyncHandler(async (req, res)=>{
 
     const {id=req.user.sub, email, role, state, firstname, lastName, age, city, street, phoneNumber}= req.body
-    console.log(id)
     const newUser=await User.findByIdAndUpdate(id, {
         email,
         role,
