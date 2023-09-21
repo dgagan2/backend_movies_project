@@ -4,6 +4,6 @@ const {addMovieToFavorites, getFavoriteMovies, deleteFavoriteMovie}=require('../
 
 favoriteMovies.get('/', getFavoriteMovies)
 favoriteMovies.post('/:movieId', addMovieToFavorites)
-favoriteMovies.delete('/:movieId', deleteFavoriteMovie)
+favoriteMovies.patch('/:movieId', deleteFavoriteMovie)
 
 module.exports=favoriteMovies

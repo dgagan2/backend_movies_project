@@ -6,11 +6,11 @@ const addMovieToFavorites = async (req, res) => {
     const {sub} = req.user
 
     try {
-        let favoriteList = await Favorite.findOne({ user: sub });
+        let favoriteList = await Favorite.findOne({ userId: sub });
 
         if (!favoriteList) {
             favoriteList = new Favorite({
-                user: sub,
+                userId: sub,
                 movies: []
             });
         }
@@ -28,7 +28,7 @@ const addMovieToFavorites = async (req, res) => {
 
 const getFavoriteMovies=expressAsyncHandler(async(req, res)=>{
         const {sub}=req.user
-        const listFavorite=await Favorite.findOne({user:sub})
+        const listFavorite=await Favorite.findOne({userId:sub})
         res.status(200).json(listFavorite)
     }
 )
@@ -37,10 +37,14 @@ const deleteFavoriteMovie=async(req, res)=>{
     const {sub}=req.user
     const { movieId } = req.params
     try {
-        const favorite=await Favorite.findOneAndDelete({user:sub, movies:movieId})
+        const favorite=await Favorite.findOne({userId:sub}, 'movies')
+        if(favorite){
+            const newList=favorite.movies.filter((movie)=>movie!=movieId)
+            await Favorite.findOneAndUpdate({userId:sub},{movies:newList})
+        }
         res.status(200).json({message:'Pelicula quitada de favoritos'})
     } catch (error) {
-        res.status(500).json({message:'Error al quitar la pelicula de favoritos'})
+        res.status(500).json({message:'Error al quitar la pelicula de favoritos', error})
     }
 
 }

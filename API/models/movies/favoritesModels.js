@@ -7,7 +7,7 @@ const favoriteSchema=mongoose.Schema({
             ref: 'Movie'
         }
     ],
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User',
