@@ -6,11 +6,12 @@ const routerApi = require('./routes/main.routes')
 const { checkApiKey } = require('./middleware/auth.handler')
 const jwtStrategy = require('./services/strategies/jwt.strategy')
 const passport = require('passport')
-
+var cors = require('cors')
 const app = express()
 const port = process.env.PORT || 3000
 
 connectToDatabase()
+app.use(cors())
 app.use(express.Router())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
