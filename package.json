@@ -21,8 +21,10 @@
   "description": "This is the backend for a movie website called Oura Movies",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./API/index.js"
+    "test": "NODE_ENV=test jest --verbose --silent --detectOpenHandles",
+    "dev": "nodemon ./API/index.js",
+    "start": "NODE_ENV=production node ./API/index.js",
+    "test:watch":"npm run test -- --watch"
   },
   "author": "andgag",
   "license": "ISC"

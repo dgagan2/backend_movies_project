@@ -5,7 +5,7 @@ const { deletePassword, removePasswords } = require("../../utils/deletePassword"
 
 const getUsers=asyncHandler(async (req, res)=>{
     const {limit=20, skip=0}=req.query
-    const users=await User.find({}).limit(limit).skip(skip).exec()
+    const users=await User.find({}).limit(limit).skip(skip)
     res.status(200).json(removePasswords(users))
 })
 
