@@ -49,7 +49,7 @@ const addLike=async (id, value)=>{
 
 const search=async (id, sub)=>{
     if(!id || !sub){
-        res.status(400).json({message:'Id pelicula vacio'})
+        return res.status(400).json({message:'Id pelicula vacio'})
     }
 
     const searchLike = await LikeMovie.find({

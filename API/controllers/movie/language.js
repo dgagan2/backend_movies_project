@@ -4,7 +4,7 @@ const Language=require('../../models/movies/languageModels')
 const addLanguage=asyncHandler(async (req, res)=>{
     const {name}=req.body
     if(!name){
-        res.status(400).json({message:'Ingrese un nombre'})
+        return res.status(400).json({message:'Ingrese un nombre'})
     }
     const newLanguage=await Language.create({name})
     res.status(201).json(newLanguage)
@@ -14,7 +14,7 @@ const addLanguage=asyncHandler(async (req, res)=>{
 const getLanguageByIDs=async (req, res)=>{
     const {id}=req.body
     if(!id){
-        res.status(400).json({message:'Ingrese al menos un ID'})
+        return  res.status(400).json({message:'Ingrese al menos un ID'})
     }
     try {
         const language=await Language.find({_id:{$in:id}})
@@ -27,7 +27,7 @@ const getLanguageByIDs=async (req, res)=>{
 const getLanguageByName=asyncHandler(async (req, res)=>{
     const {name}=req.body
     if(!name){
-        res.status(400).json({message:'Ingrese el lenguaje a buscar'})
+        return res.status(400).json({message:'Ingrese el lenguaje a buscar'})
     }
     const language=await Language.find( { name: { $regex: name, $options: 'i' } })
     if(language){
@@ -40,7 +40,7 @@ const getLanguageByName=asyncHandler(async (req, res)=>{
 const updateLanguage=async (req, res)=>{
     const {name, id}=req.body
     if(!name || !id){
-        res.status(400).json({message:'Ingrese el nombre y ID'})
+        return res.status(400).json({message:'Ingrese el nombre y ID'})
     }
     try {
         const newLanguage=await Language.findById(id, {name}, {new:true})
@@ -53,7 +53,7 @@ const updateLanguage=async (req, res)=>{
 const deleteLanguage=asyncHandler(async (req, res)=>{
     const {id}=req.params
     if(!id){
-        res.status(400).json({message:'Ingrese el ID del lenguaje a eliminar'})
+        return res.status(400).json({message:'Ingrese el ID del lenguaje a eliminar'})
     }
     const language=await Language.findByIdAndDelete(id)
     if(language){

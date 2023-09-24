@@ -10,19 +10,19 @@ const signIn=asyncHandler(async (req, res)=>{
 
     
         if(!email || !password || !firstname || !lastName || !age){
-            res.status(400).json({message:'Campos obligatorios vacios'})
+           return res.status(400).json({message:'Campos obligatorios vacios'})
         }
         if(!validarEmail(email)){
-            res.status(400).json({message:'Correo no valido'})
+           return res.status(400).json({message:'Correo no valido'})
         }
         if(await User.findOne({email})){
-            res.status(400).json({message:'Usuario ya existe'})
+           return res.status(400).json({message:'Usuario ya existe'})
         }
         if(!validarPassword(password)){
-            res.status(400).json({message:'La contraseña debe tener mas de 6 letras incluyendo simbolos, numeros y mayusculas'})
+           return res.status(400).json({message:'La contraseña debe tener mas de 6 letras incluyendo simbolos, numeros y mayusculas'})
         }
         if(age<18){
-            res.status(400).json({message:"Debe ser mayor de edad para poder registrarse"})
+           return res.status(400).json({message:"Debe ser mayor de edad para poder registrarse"})
         }
    
         const newUser=await User.create({

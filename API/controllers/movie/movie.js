@@ -41,7 +41,7 @@ const updateMovie=asyncHandler(async (req, res)=>{
 const deleteMovie=async (req, res)=>{
     const {id}=req.params
     if(!id){
-        res.status(400).json({message:'Ingrese el ID de la pelicula'})
+        return res.status(400).json({message:'Ingrese el ID de la pelicula'})
     }
     try {
         const movie=await Movie.findByIdAndDelete(id)

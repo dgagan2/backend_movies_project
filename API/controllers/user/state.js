@@ -6,9 +6,9 @@ const addState=asyncHandler(async (req, res)=>{
     const name= req.body.name
     const newState=await State.create({name:primeraLetraMayuscula(name)})
     if(newState){
-        res.status(201).json(newState)
+         res.status(201).json(newState)
     }else{
-        res.status(500).json({message:'No se creo el estado'})
+         res.status(500).json({message:'No se creo el estado'})
     }
     
 })

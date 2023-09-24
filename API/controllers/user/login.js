@@ -9,13 +9,13 @@ const hashedPassword = require("./hashedPassword");
 const login=expressAsyncHandler(async (req, res)=>{
     const {email, password}=req.body
     if(!email || !password){
-        res.status(400).json({message:'Ingrese usuario y contraseña'})
+        return res.status(400).json({message:'Ingrese usuario y contraseña'})
     }
     const user=await User.findOne({email})
     const comparePasswords=await bcrypt.compare(password, user.password)
     if(user && comparePasswords){
         if(user.state!='active'){
-            res.status(403).json({message:'La cuenta esta deshabilitada'})
+            return res.status(403).json({message:'La cuenta esta deshabilitada'})
         }
         const auditSession=await AuditUser.create({
             idUser: user.id,
@@ -45,10 +45,10 @@ const login=expressAsyncHandler(async (req, res)=>{
 const forgotPassword=expressAsyncHandler(async (req, res)=>{
     const {email, password}=req.body
     if(!email || !password){
-        res.status(400).json({message:'Ingrese usuario y contraseña'})
+        return res.status(400).json({message:'Ingrese usuario y contraseña'})
     }
     if(!validarPassword(password)){
-        res.status(400).json({message:"La contraseña debe tener mas de 6 letras incluyendo simbolos, numeros y mayusculas"})
+        return res.status(400).json({message:"La contraseña debe tener mas de 6 letras incluyendo simbolos, numeros y mayusculas"})
     }
     const updatePassword=await User.findOneAndUpdate({email}, {password:await hashedPassword(password)})
     if(updatePassword){
