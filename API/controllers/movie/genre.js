@@ -5,7 +5,7 @@ const primeraLetraMayuscula = require("../../utils/lowercase")
 const addGenre=async (req, res)=>{
     const {name}=req.body
     if(!name){
-        throw new Error('Ingrese un nombre')
+        res.status(400).json({message:'Ingrese un nombre'})
     }
 
     try {
@@ -21,7 +21,7 @@ const addGenre=async (req, res)=>{
 const getGenreByIDs=asyncHandler(async (req, res)=>{
     const {id}=req.body
     if(!id){
-        throw new Error('Ingrese al menos un ID')
+        res.status(400).json({message:'Ingrese al menos un ID'})
     }
     const genre=await Genre.find({_id:{$in:id}})
     if(genre){
@@ -34,7 +34,7 @@ const getGenreByIDs=asyncHandler(async (req, res)=>{
 const getGenreByName=asyncHandler(async (req, res)=>{
     const {name}=req.body
     if(!name){
-        throw new Error('Ingrese el genero a buscar')
+        res.status(400).json({message:'Ingrese el genero a buscar'})
     }
     const genre=await Genre.find( { name: { $regex: name, $options: 'i' } })
     if(genre){
@@ -47,7 +47,7 @@ const getGenreByName=asyncHandler(async (req, res)=>{
 const updateGenre=async (req, res)=>{
     const {name, id}=req.body
     if(!name || !id){
-        throw new Error('Ingrese el nombre y ID')
+        res.status(400).json({message:'Ingrese el nombre y ID'})
     }
     try {
         const newGenre=await Genre.findById(id, {name})
@@ -61,7 +61,7 @@ const updateGenre=async (req, res)=>{
 const deleteGenre=asyncHandler(async (req, res)=>{
     const {id}=req.params
     if(!id){
-        throw new Error('Ingrese el ID del genero a eliminar')
+        res.status(400).json({message:'Ingrese el ID del genero a eliminar'})
     }
 
     try {

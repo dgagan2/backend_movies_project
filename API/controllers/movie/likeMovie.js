@@ -25,8 +25,7 @@ const updateOrAddLike=asyncHandler(async (req, res)=>{
             res.status(200).json(newLike)
         }
     } catch (error) {
-        res.status(500)
-        throw new Error('La pelicula no existe', error)
+        res.status(500).json({message:'La pelicula no existe'})
     }
 })
 
@@ -50,7 +49,7 @@ const addLike=async (id, value)=>{
 
 const search=async (id, sub)=>{
     if(!id || !sub){
-        throw new Error('Id pelicula vacio')
+        res.status(400).json({message:'Id pelicula vacio'})
     }
 
     const searchLike = await LikeMovie.find({

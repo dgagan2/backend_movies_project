@@ -35,8 +35,7 @@ const searchMovie=asyncHandler(async (req, res)=>{
     }
 
     if(!movie || Object.keys(movie).length==0){
-        res.status(404)
-        throw new Error('Lo siento, no tenemos nada que mostrar') 
+        res.status(404).json({message:'Lo siento, no tenemos nada que mostrar'})
     }else{
         res.status(200).json(movie)
     }
@@ -49,7 +48,7 @@ const searchMovieById=asyncHandler(async (req, res)=>{
        const movie =await Movie.findByID(id)
        res.status(200).json(movie)
     }else{
-        throw new Error('ID vacio')
+        res.status(400).json({message:'ID vacio'})
     }
 })
 
@@ -59,8 +58,7 @@ const searchMovieByPremiere=asyncHandler(async (req, res)=>{
     if(movie){
         res.status(200).json(movie)
     }else{
-        res.status(404)
-        throw new Error('Lo siento, no tenemos nada que mostrar') 
+        res.status(404).json({message:'Lo siento, no tenemos nada que mostrar'}) 
     }
 })
 
@@ -75,8 +73,7 @@ const searchMovieByReleaseDate=asyncHandler(async (req, res)=>{
     if(movie){
         res.status(200).json(movie)
     }else{
-        res.status(404)
-        throw new Error('Lo siento, no tenemos nada que mostrar') 
+        res.status(404).json({message:'Lo siento, no tenemos nada que mostrar'}) 
     }
 })
 
@@ -86,8 +83,7 @@ const searchMovieByMostRecent=asyncHandler(async (req, res)=>{
     if(movie){
         res.status(200).json(movie)
     }else{
-        res.status(404)
-        throw new Error('Lo siento, no tenemos nada que mostrar') 
+        res.status(404).json({message:'Lo siento, no tenemos nada que mostrar'}) 
     }
 })
 
@@ -97,8 +93,7 @@ const searchMovieByLabels=asyncHandler(async (req, res)=>{
     if(movie){
         res.status(200).json(movie)
     }else{
-        res.status(404)
-        throw new Error('Lo siento, no tenemos nada que mostrar') 
+        res.status(404).json({message:'Lo siento, no tenemos nada que mostrar'}) 
     }
 })
 

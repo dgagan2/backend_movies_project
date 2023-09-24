@@ -25,7 +25,7 @@ async function checkPassword(email, oldPassword){
     if(user && compararPassword){
         return
     }else{
-        throw new Error("La contraseña no coinciden")
+        res.status(400).json({message:"La contraseña no coinciden"})
     }
 }
 
