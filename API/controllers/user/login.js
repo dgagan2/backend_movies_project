@@ -38,7 +38,7 @@ const login=expressAsyncHandler(async (req, res)=>{
             token: token
         })
     }else{
-        res.status(200).json({message:'Su Usuario o Contraseña no son válidos.'})
+        res.status(400).json({message:'Su Usuario o Contraseña no son válidos.'})
     }
 })
 
@@ -59,7 +59,7 @@ const forgotPassword=expressAsyncHandler(async (req, res)=>{
         })
         res.status(200).json({message:'Contraseña actualizada'})
     }else(
-        res.status(200).json({message:'Usuario no valido'})
+        res.status(400).json({message:'Usuario no valido'})
     )
  
 })
