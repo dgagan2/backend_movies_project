@@ -4,7 +4,7 @@ const hashedPassword = require("./hashedPassword")
 const { validarPassword, validarEmail } = require("../../utils/validations/userValidation")
 const {deletePassword} = require("../../utils/deletePassword")
 
-const signIn=asyncHandler(async (req, res)=>{
+const signIn=async (req, res)=>{
     const {email, password, firstname, lastName, age, city, street, phoneNumber}= req.body
 
     if(!email || !password || !firstname || !lastName || !age){
@@ -47,6 +47,6 @@ const signIn=asyncHandler(async (req, res)=>{
         res.status(500).json({message:'Usuario no creado', error})
     }
 
-})
+}
 
 module.exports=signIn
