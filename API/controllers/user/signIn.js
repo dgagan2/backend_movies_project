@@ -27,24 +27,24 @@ const signIn=asyncHandler(async (req, res)=>{
         res.status(400)
         throw new Error("Debe ser mayor de edad para poder registrarse")
     }
-    const newUser=await User.create({
-        email,
-        password: await hashedPassword(password),
-        fullName:{
-            firstname, 
-            lastName, 
-        },
-        age,
-        address:{
-            city, 
-            street, 
-        },
-        phoneNumber
-    })
-    if(newUser){
+    try {
+        const newUser=await User.create({
+            email,
+            password: await hashedPassword(password),
+            fullName:{
+                firstname, 
+                lastName, 
+            },
+            age,
+            address:{
+                city, 
+                street, 
+            },
+            phoneNumber
+        })
         res.status(201).json(deletePassword(newUser))
-    }else{
-        res.status(500).json({message:'Usuario no creado'})
+    } catch (error) {
+        res.status(500).json({message:'Usuario no creado', error})
     }
 
 })
