@@ -12,7 +12,8 @@ const {
         searchMovieByMostRecent, 
         searchMovieByPremiere, 
         searchMovieByReleaseDate, 
-        getAllMovie
+        getAllMovie,
+        searchMovieBillboard
     } = require('../controllers/movie/searchMovie')
 const genreRoutes = require('./genre.routes')
 const languageRoutes = require('./language.routes')
@@ -32,6 +33,7 @@ movieRoute.get('/date', protect(), searchMovieByReleaseDate)
 movieRoute.get('/recent', protect(), searchMovieByMostRecent)
 movieRoute.get('/labels', protect(), searchMovieByLabels)
 movieRoute.get('/premiere', protect(), searchMovieByPremiere)
+movieRoute.get('/billboard', protect(), searchMovieBillboard)
 movieRoute.get('/search/:id', protect(), searchMovieById)
 
 movieRoute.patch('/', 

@@ -79,4 +79,9 @@ const getAllGenre=asyncHandler(async (req, res)=>{
     res.status(200).json(genre)
 })
 
-module.exports={addGenre, getGenreByIDs, getGenreByName, updateGenre, deleteGenre, getAllGenre}
+const genresFromHeaderMenu=asyncHandler(async (req, res)=>{
+    const {skip=0, limit=10}=req.query
+    const genre=await Genre.find({headerList:true}).limit(limit).skip(skip)
+    res.status(200).json(genre)
+})
+module.exports={addGenre, getGenreByIDs, getGenreByName, updateGenre, deleteGenre, getAllGenre, genresFromHeaderMenu}

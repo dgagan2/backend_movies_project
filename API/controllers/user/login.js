@@ -2,9 +2,11 @@ const expressAsyncHandler = require("express-async-handler");
 const User=require('../../models/users/usersModels')
 const AuditUser= require('../../models/users/auditModels')
 const bcrypt=require('bcrypt');
-const signToken = require("../../services/jwt/tokenSignin");
+const {signToken, verifyToken} = require("../../services/jwt/tokenSignin");
 const { validarPassword } = require("../../utils/validations/userValidation");
 const hashedPassword = require("./hashedPassword");
+
+
 
 const login=expressAsyncHandler(async (req, res)=>{
     const {email, password}=req.body
@@ -23,24 +25,53 @@ const login=expressAsyncHandler(async (req, res)=>{
         })
         const payload = {
             sub: user.id,
-            email: user.email,
             name: user.fullName.firstname,
             role: user.role,
             state: user.state,
             idSession: auditSession.id
         }
         const token=signToken(payload)
+
         res.status(200).json({
             id: user.id,
             name: user.fullName.firstname,
-            age: user.age,
-            address: user.address,
+            role: user.role,
             token: token
         })
     }else{
         res.status(400).json({message:'Su Usuario o Contraseña no son válidos.'})
     }
 })
+
+const refreshJWT=async(req, res)=>{
+    const {token}=req.body
+    if(!token){
+        return res.status(400).json({message:'Token vacio'})
+    }
+    try {
+        
+    const verify=await verifyToken(token)
+
+        const payload = {
+            sub: verify.sub,
+            name: verify.name,
+            role: verify.role,
+            state: verify.state,
+            idSession: verify.idSession
+        }
+        const newtoken=signToken(payload)
+        res.status(200).json({
+            id: verify.sub,
+            name: verify.name,
+            role: verify.role,
+            token: newtoken
+        })
+       
+    } catch (error) {
+        res.status(400).json({message:'Something goes wrong', error})
+    }
+
+}
 
 const forgotPassword=expressAsyncHandler(async (req, res)=>{
     const {email, password}=req.body
@@ -63,4 +94,4 @@ const forgotPassword=expressAsyncHandler(async (req, res)=>{
     )
  
 })
-module.exports={login, forgotPassword}
+module.exports={login, forgotPassword,refreshJWT}
