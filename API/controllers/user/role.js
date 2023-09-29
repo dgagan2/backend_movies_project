@@ -37,9 +37,12 @@ const deleteRole=asyncHandler(async (req, res)=>{
     }
     try {
         const Delete=await Role.findByIdAndDelete(id)
+        if(Delete){
         res.status(200).json(Delete)
+        }else{
+             res.status(500).json({message:'Role no existe'})}
     } catch (error) {
-        res.status(500).json({message:'Role no existe'})
+        res.status(500).json({message:'Role no existe', error})
     }
     
 })
