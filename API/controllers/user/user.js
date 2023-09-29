@@ -31,7 +31,7 @@ const filterUser=asyncHandler(async (req, res)=>{
 })
 
 const updateUser=asyncHandler(async (req, res)=>{
-
+    try{
     const {id, email, role, state, firstname, lastName, age, city, street, phoneNumber}= req.body
     const newUser=await User.findByIdAndUpdate(id, {
         email,
@@ -48,11 +48,14 @@ const updateUser=asyncHandler(async (req, res)=>{
         },
         phoneNumber
     })
-    if(newUser){
         res.status(200).json({message:"Datos actualizado"})
-    }else{
-        res.status(200).json({message:"No se actualizaron los datos"})
     }
+    catch (error) {
+  res.status(200).json({message:"No se actualizaron los datos", error})
+}
+ 
+        
+    
     
 })
 
