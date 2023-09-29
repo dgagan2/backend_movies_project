@@ -1,10 +1,10 @@
 const asyncHandler = require("express-async-handler")
 const State=require('../../models/users/stateModels')
-const primeraLetraMayuscula = require("../../utils/lowercase")
+const {lettersToLowercase} = require("../../utils/lowercase")
 
 const addState=asyncHandler(async (req, res)=>{
     const name= req.body.name
-    const newState=await State.create({name:primeraLetraMayuscula(name)})
+    const newState=await State.create({name:lettersToLowercase(name)})
     if(newState){
          res.status(201).json(newState)
     }else{
@@ -16,7 +16,7 @@ const addState=asyncHandler(async (req, res)=>{
 const updateState=async (req, res)=>{
     const {id, name}= req.body
     try {
-        const newState=await State.findByIdAndUpdate(id, {name:primeraLetraMayuscula(name)}, { new: true })
+        const newState=await State.findByIdAndUpdate(id, {name:lettersToLowercase(name)}, { new: true })
         res.status(200).json(newState)
     } catch (error) {
         res.status(500).json({message:'No se pudo actualizar', error})
