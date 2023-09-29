@@ -51,7 +51,7 @@ const updateUser=asyncHandler(async (req, res)=>{
         res.status(200).json({message:"Datos actualizado"})
     }
     catch (error) {
-  res.status(200).json({message:"No se actualizaron los datos", error})
+  res.status(500).json({message:"No se actualizaron los datos", error})
 }
  
         
