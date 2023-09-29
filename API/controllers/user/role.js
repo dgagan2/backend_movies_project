@@ -1,10 +1,10 @@
 const asyncHandler = require("express-async-handler")
 const Role=require('../../models/users/roleModels')
-const primeraLetraMayuscula = require("../../utils/lowercase")
+const {lettersToLowercase} = require("../../utils/lowercase")
 
 const addRole=asyncHandler(async (req, res)=>{
     const name= req.body.name
-    const newRole=await Role.create({name:primeraLetraMayuscula(name)})
+    const newRole=await Role.create({name:lettersToLowercase(name)})
     if(newRole){
         res.status(201).json(newRole)
     }else{
@@ -16,7 +16,7 @@ const addRole=asyncHandler(async (req, res)=>{
 const updateRole=async (req, res)=>{
     const {id, name}= req.body
     try {
-        const newRole=await Role.findByIdAndUpdate(id, {name:primeraLetraMayuscula(name)}, {new:true})
+        const newRole=await Role.findByIdAndUpdate(id, {name:lettersToLowercase(name)}, {new:true})
         res.status(200).json(newRole)
     } catch (error) {
         res.status(400).json({message:'No se actualizo el role', error})
