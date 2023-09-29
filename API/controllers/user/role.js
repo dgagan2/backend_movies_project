@@ -3,14 +3,14 @@ const Role=require('../../models/users/roleModels')
 const {lettersToLowercase} = require("../../utils/lowercase")
 
 const addRole=asyncHandler(async (req, res)=>{
-    const name= req.body.name
+    try {
+  const name= req.body.name
     const newRole=await Role.create({name:lettersToLowercase(name)})
-    if(newRole){
         res.status(201).json(newRole)
-    }else{
-        res.status(500).json({message:'No se creo el role'})
-    }
-    
+} catch (error) {
+  res.status(500).json({message:'No se creo el role', error})
+}
+  
 })
 
 const updateRole=async (req, res)=>{
