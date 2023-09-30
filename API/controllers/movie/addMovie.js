@@ -4,11 +4,11 @@ const uploadFile=require("../../utils/uploadFiles")
 const {primeraLetraMayuscula} = require("../../utils/lowercase")
 
 const addMovie=asyncHandler(async (req, res)=>{
-        const {title, overview, genre, language, movieDuration, 
-            releaseDate, director, actors, originalTitle,
-            labels, premiere }=req.body
+         const {title, overview, genre, language, movieDuration, 
+            releaseDate, director, actors, premiere, billboard }=req.body
         const {posterPath, postBackground}=req.files
-        if(!title || !overview || !genre || !language ){
+         try {
+            if(!title || !overview || !genre || !language ){
             return res.status(400).json({message:'Campos incompletos, valide la información'})
         }
         if(posterPath && posterPath.length>0){
@@ -30,15 +30,17 @@ const addMovie=asyncHandler(async (req, res)=>{
             releaseDate,
             director,
             actors,
-            originalTitle,
-            labels,
             premiere,
             posterPath:downloadURL,
-            postBackground:background.downloadURL
+            postBackground:background.downloadURL,
+            billboard
         })
 
         const savedMovie=await movie.save()
         res.status(201).json(savedMovie)
+  } catch (error) {
+            res.status(500).json({message:'Error al crear la pelicula', error})
+  } 
     
     }
 )
