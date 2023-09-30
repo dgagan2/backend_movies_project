@@ -8,11 +8,13 @@ const addMovie=asyncHandler(async (req, res)=>{
             releaseDate, director, actors, originalTitle,
             labels, premiere }=req.body
         const {posterPath, postBackground}=req.files
-        if(!title || !overview || !genre || !language || !posterPath){
+        if(!title || !overview || !genre || !language ){
             return res.status(400).json({message:'Campos incompletos, valide la información'})
         }
         if(posterPath && posterPath.length>0){
             var {downloadURL}=await uploadFile(posterPath[0], 'poster')
+        }else{
+              return res.status(400).json({message:'Debe cargar la imagen de poster'})
         }
         if(postBackground && postBackground.length>0){
             var background=await uploadFile(postBackground[0], 'background')
