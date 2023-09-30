@@ -61,7 +61,7 @@ const searchMovieByPremiere=asyncHandler(async (req, res)=>{
 
 const searchMovieBillboard=asyncHandler(async (req, res)=>{
     const{skip=0, limit=5}=req.body
-    const movie=await Movie.find({premiere:true}).limit(limit).skip(skip)
+    const movie=await Movie.find({billboard:true}).limit(limit).skip(skip)
     res.status(200).json(movie)
     
 })
