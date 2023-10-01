@@ -32,16 +32,16 @@ const getGenreByIDs=asyncHandler(async (req, res)=>{
 })
 
 const getGenreByName=asyncHandler(async (req, res)=>{
-    const {name}=req.body
-    if(!name){
+    const {name}=req.quey
+    try {
+     if(!name){
         return res.status(400).json({message:'Ingrese el genero a buscar'})
     }
     const genre=await Genre.find( { name: { $regex: name, $options: 'i' } })
-    if(genre){
         res.status(200).json(genre)
-    }else{
-        res.status(400).json({message:'Información no encontrada'})
-    }
+  } catch (error) {
+    res.status(400).json({message:'Información no encontrada', error})
+  }
 })
 
 const updateGenre=async (req, res)=>{
