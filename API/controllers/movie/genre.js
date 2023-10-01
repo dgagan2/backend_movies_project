@@ -50,7 +50,7 @@ const updateGenre=async (req, res)=>{
         return res.status(400).json({message:'Ingrese el nombre y ID'})
     }
     try {
-        const newGenre=await Genre.findById(id, {name, headerList})
+        const newGenre=await Genre.findByIdAndUpdate(id, {name, headerList})
         res.status(200).json(newGenre)
     } catch (error) {
         res.status(400).json({message: 'No se pudo actualizar', error})
