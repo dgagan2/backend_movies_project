@@ -6,7 +6,7 @@ const {primeraLetraMayuscula} = require("../../utils/lowercase")
 const updateMovie=asyncHandler(async (req, res)=>{
         const {id, title, overview, genre, language, movieDuration, 
             releaseDate, director, actors, originalTitle,
-            labels, premiere }=req.body
+            labels, premiere, videoLink, billboard }=req.body
         const {posterPath, postBackground}=req.files
         if(posterPath && posterPath.length>0){
             var {downloadURL}=await uploadFile(posterPath[0], 'poster')
@@ -24,11 +24,11 @@ const updateMovie=asyncHandler(async (req, res)=>{
             director,
             actors,
             originalTitle,
-            adult,
-            labels,
             premiere,
             posterPath:downloadURL,
-            postBackground:background.downloadURL
+            postBackground:background.downloadURL,
+            videoLink,
+            billboard
         })
         if(newMovie){
             res.status(200).json(newMovie)
