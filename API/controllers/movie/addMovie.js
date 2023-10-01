@@ -5,7 +5,7 @@ const {primeraLetraMayuscula} = require("../../utils/lowercase")
 
 const addMovie=asyncHandler(async (req, res)=>{
          const {title, overview, genre, language, movieDuration, 
-            releaseDate, director, actors, premiere, billboard }=req.body
+            releaseDate, director, actors, premiere, billboard, videoLink }=req.body
         const {posterPath, postBackground}=req.files
          try {
             if(!title || !overview || !genre || !language ){
@@ -33,7 +33,8 @@ const addMovie=asyncHandler(async (req, res)=>{
             premiere,
             posterPath:downloadURL,
             postBackground:background.downloadURL,
-            billboard
+            billboard,
+            videoLink
         })
 
         const savedMovie=await movie.save()
