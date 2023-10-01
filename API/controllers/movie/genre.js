@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler")
 const Genre=require('../../models/movies/genreModels')
-const primeraLetraMayuscula = require("../../utils/lowercase")
+const {primeraLetraMayuscula} = require("../../utils/lowercase")
 
 const addGenre=async (req, res)=>{
     const {name, headerList}=req.body

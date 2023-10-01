@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler")
 const Movie=require('../../models/movies/movieModels')
 const uploadFile=require("../../utils/uploadFiles")
-const primeraLetraMayuscula = require("../../utils/lowercase")
+const {primeraLetraMayuscula} = require("../../utils/lowercase")
 
 const updateMovie=asyncHandler(async (req, res)=>{
         const {id, title, overview, genre, language, movieDuration, 
