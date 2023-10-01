@@ -3,13 +3,13 @@ const Genre=require('../../models/movies/genreModels')
 const primeraLetraMayuscula = require("../../utils/lowercase")
 
 const addGenre=async (req, res)=>{
-    const {name}=req.body
+    const {name, headerList}=req.body
     if(!name){
         return res.status(400).json({message:'Ingrese un nombre'})
     }
 
     try {
-        const newGenre=await Genre.create({name:primeraLetraMayuscula(name)})
+        const newGenre=await Genre.create({name:primeraLetraMayuscula(name), headerList})
         res.status(201).json(newGenre)
     } catch (error) {
         res.status(500).json({message:'No se pudo crear el genero, ya existe', error})
