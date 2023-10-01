@@ -45,12 +45,12 @@ const getGenreByName=asyncHandler(async (req, res)=>{
 })
 
 const updateGenre=async (req, res)=>{
-    const {name, id}=req.body
+    const {name, id, headerList}=req.body
     if(!name || !id){
         return res.status(400).json({message:'Ingrese el nombre y ID'})
     }
     try {
-        const newGenre=await Genre.findById(id, {name})
+        const newGenre=await Genre.findById(id, {name, headerList})
         res.status(200).json(newGenre)
     } catch (error) {
         res.status(400).json({message: 'No se pudo actualizar', error})
