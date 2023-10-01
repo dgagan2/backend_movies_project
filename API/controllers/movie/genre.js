@@ -32,7 +32,7 @@ const getGenreByIDs=asyncHandler(async (req, res)=>{
 })
 
 const getGenreByName=asyncHandler(async (req, res)=>{
-    const {name}=req.quey
+    const {name}=req.query
     try {
      if(!name){
         return res.status(400).json({message:'Ingrese el genero a buscar'})
