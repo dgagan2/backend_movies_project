@@ -3,40 +3,51 @@ const Movie=require('../../models/movies/movieModels')
 const uploadFile=require("../../utils/uploadFiles")
 const {primeraLetraMayuscula} = require("../../utils/lowercase")
 
-const updateMovie=asyncHandler(async (req, res)=>{
-        const {id, title, overview, genre, language, movieDuration, 
-            releaseDate, director, actors, originalTitle,
-            labels, premiere, videoLink, billboard }=req.body
-        const {posterPath, postBackground}=req.files
-        if(posterPath && posterPath.length>0){
-            var {downloadURL}=await uploadFile(posterPath[0], 'poster')
+
+const updateMovie = asyncHandler(async (req, res) => {
+    const { id } = req.body;
+    const { posterPath, postBackground, ...updatedFields } = req.body;
+
+    try {
+        // Obtén la película existente de la base de datos
+        const existingMovie = await Movie.findById(id);
+
+        if (!existingMovie) {
+            return res.status(404).json({ message: 'Película no encontrada' });
         }
-        if(postBackground && postBackground.length>0){
-            var background=await uploadFile(postBackground[0], 'background')
+
+        // Crea un objeto con los campos actualizados
+        const updatedMovieFields = {
+            title: updatedFields.title ? primeraLetraMayuscula(updatedFields.title) : existingMovie.title,
+            overview: updatedFields.overview || existingMovie.overview,
+            genre: updatedFields.genre || existingMovie.genre,
+            language: updatedFields.language || existingMovie.language,
+            movieDuration: updatedFields.movieDuration || existingMovie.movieDuration,
+            releaseDate: updatedFields.releaseDate || existingMovie.releaseDate,
+            director: updatedFields.director || existingMovie.director,
+            actors: updatedFields.actors || existingMovie.actors,
+            originalTitle: updatedFields.originalTitle || existingMovie.originalTitle,
+            premiere: updatedFields.premiere || existingMovie.premiere,
+            posterPath: posterPath && posterPath.length > 0 ? (await uploadFile(posterPath[0], 'poster')).downloadURL : existingMovie.posterPath,
+            postBackground: postBackground && postBackground.length > 0 ? (await uploadFile(postBackground[0], 'background')).downloadURL : existingMovie.postBackground,
+            videoLink: updatedFields.videoLink || existingMovie.videoLink,
+            billboard: updatedFields.billboard || existingMovie.billboard,
+        };
+
+        // Actualiza la película en la base de datos
+        const updatedMovie = await Movie.findByIdAndUpdate(id, updatedMovieFields, { new: true });
+
+        if (updatedMovie) {
+            res.status(200).json(updatedMovie);
+        } else {
+            res.status(400).json({ message: 'No se pudo actualizar la película' });
         }
-        const newMovie=await Movie.findByIdAndUpdate(id, {
-            title: primeraLetraMayuscula(title),
-            overview,
-            genre,
-            language,
-            movieDuration,
-            releaseDate,
-            director,
-            actors,
-            originalTitle,
-            premiere,
-            posterPath:downloadURL,
-            postBackground:background.downloadURL,
-            videoLink,
-            billboard
-        })
-        if(newMovie){
-            res.status(200).json(newMovie)
-        }else{
-            res.status(400).json({message:'No se pudo actualizar la pelicula'})
-        }   
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error en el servidor' });
     }
-)
+});
+
 
 const deleteMovie=async (req, res)=>{
     const {id}=req.params
