@@ -45,7 +45,7 @@ const searchMovie=asyncHandler(async (req, res)=>{
 const searchMovieById=asyncHandler(async (req, res)=>{
     const {id}=req.params
     if(id){
-       const movie =await Movie.findByID(id)
+       const movie =await Movie.findById(id)
        res.status(200).json(movie)
     }else{
         res.status(400).json({message:'ID vacio'})
