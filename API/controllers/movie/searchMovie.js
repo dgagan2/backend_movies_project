@@ -3,7 +3,7 @@ const Movie=require('../../models/movies/movieModels')
 
 
 const searchMovie=asyncHandler(async (req, res)=>{
-    const{title, genre, language, originalTitle, skip=0, limit=20}=req.body
+    const{title, genre, language, originalTitle, skip=0, limit=20}=req.query
     let movie
     if(title){
         movie=await Movie.find(
