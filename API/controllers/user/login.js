@@ -14,6 +14,7 @@ const login=expressAsyncHandler(async (req, res)=>{
         return res.status(400).json({message:'Ingrese usuario y contraseña'})
     }
     const user=await User.findOne({email})
+    if(!user) return res.status(400).json({message:'Su Usuario o Contraseña no son válidos.'})
     const comparePasswords=await bcrypt.compare(password, user.password)
     if(user && comparePasswords){
         if(user.state!='active'){
